@@ -11,6 +11,7 @@ declare namespace Release {
         url: string
         size: number
         checksum: string
-        platform: NodeJS.Platform
+        platform: NodeJS.Platform,
+        arch: 'arm64' | 'x86' | 'universal'
     }
 }

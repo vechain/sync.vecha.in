@@ -16,11 +16,23 @@ Vue.filter('osName', (platform: NodeJS.Platform) => {
 Vue.filter('osLogo', (platform: NodeJS.Platform) => {
     switch (platform) {
         case 'win32':
-            return require('@/assets/windows-logo.svg')
+            return require('@/assets/windows.svg')
         case 'darwin':
-            return require('@/assets/mac-logo.svg')
+            return require('@/assets/macOS.svg')
         case 'linux':
-            return require('@/assets/linux-logo.svg')
+            return require('@/assets/linux.svg')
+    }
+    return ''
+})
+
+Vue.filter('osArch', (arch: 'x86' | 'arm64' | 'universal', platform: NodeJS.Platform) => {
+    switch (arch) {
+        case 'x86':
+            return platform === 'darwin' ? 'Intel Chip' :'64 bit'
+        case 'arm64':
+            return platform === 'darwin' ? 'Apple Silicon' :'ARM 64'
+        case 'universal':
+            return 'Universal'
     }
     return ''
 })

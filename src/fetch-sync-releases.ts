@@ -9,8 +9,20 @@ import * as Path from 'path'
 import * as URL from 'url'
 import JSYaml from 'js-yaml'
 
+function getArch(appUrl: string): 'arm64' | 'x86' | 'universal' {
+    if (appUrl.includes('-win-')) {
+        return 'universal'
+    }
+
+    if (appUrl.includes('arm64')) {
+        return 'arm64'
+    }
+
+    return 'x86'
+}
+
 function getPlatform(ymlUrl: string): NodeJS.Platform {
-    if (ymlUrl.endsWith('-linux.yml')) {
+    if (ymlUrl.endsWith('-linux.yml') || ymlUrl.endsWith('-linux-arm64.yml')) {
         return 'linux'
     }
     if (ymlUrl.endsWith('-mac.yml')) {
@@ -24,7 +36,7 @@ async function fetchReleases() {
     if (process.env.GH_TOKEN) {
         header.Authorization = 'token ' + process.env.GH_TOKEN
     }
-    const data = await httpGet('https://api.github.com/repos/vechain/thor-sync.electron/releases', header)
+    const data = await httpGet('https://api.github.com/repos/vechain/sync2/releases', header)
     const items = JSON.parse(data) as any[]
     for (const item of items) {
         const assets: Release.Asset[] = []
@@ -33,22 +45,28 @@ async function fetchReleases() {
             releaseDate: item.created_at,
             assets
         })
+        // const apps = (item.assets as any[])
+        //     .filter(asset => asset.browser_download_url.startsWith('Sync2') && !asset.browser_download_url.endsWith('blockmap'))
         const ymlAssets = (item.assets as any[])
             .filter(asset => asset.browser_download_url.endsWith('.yml'))
 
         for (const asset of ymlAssets) {
             const yml = JSYaml.safeLoad(await httpGet(asset.browser_download_url))
-            const file = (yml.files as any[])
-                .find(f =>
+            const files = (yml.files as any[])
+                .filter(f =>
                     f.url.endsWith('.exe') || f.url.endsWith('.dmg') || f.url.endsWith('.AppImage')
                 )
-            if (file) {
-                assets.push({
-                    fileName: file.url,
-                    url: URL.resolve(asset.browser_download_url, file.url),
-                    size: file.size,
-                    checksum: file.sha512,
-                    platform: getPlatform(asset.browser_download_url)
+
+            if (files.length) {
+                files.forEach(file => {
+                    assets.push({
+                        fileName: file.url,
+                        url: URL.resolve(asset.browser_download_url, file.url),
+                        size: file.size,
+                        checksum: file.sha512,
+                        platform: getPlatform(asset.browser_download_url),
+                        arch: getArch(file.url)
+                    })
                 })
             }
         }
