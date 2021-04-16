@@ -54,7 +54,7 @@ const env = {
     },
     syncReleases,
     preferredAsset(assets: Release.Asset[]) {
-        return assets.find(a => a.platform === this.platform)
+        return assets.find(a => a.platform === this.platform && a.arch !== 'arm64')
     }
 }
 
