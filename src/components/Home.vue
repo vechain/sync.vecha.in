@@ -56,7 +56,7 @@ export default class Home extends Vue {
     private shoeMenu = false
 
     private created() {
-        this.$ga.page('/connex-env/home')
+        this.$ga.page('/sync.vecha.in/home')
     }
 
     private switchTab(hash: string) {
