@@ -9,20 +9,17 @@ import 'spectre.css/dist/spectre-icons.css'
 
 Vue.config.productionTip = false
 
-if (env.target.href && window.connex) {
-    window.location.href = env.target.href
-} else {
-    Vue.use({
-        install(vue: typeof Vue) {
-            vue.prototype.$env = env
-        }
-    })
-    Vue.use(VueAnalytics, {
-        id: 'UA-132391998-2',
-        disabled: process.env.NODE_ENV !== 'production'
-    })
-    new App().$mount('#app', true)
-}
+
+Vue.use({
+    install(vue: typeof Vue) {
+        vue.prototype.$env = env
+    }
+})
+Vue.use(VueAnalytics, {
+    id: 'UA-132391998-2',
+    disabled: process.env.NODE_ENV !== 'production'
+})
+new App().$mount('#app', true)
 
 declare module 'vue/types/vue' {
     interface Vue {

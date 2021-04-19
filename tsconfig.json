@@ -13,7 +13,6 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "@vechain/connex",
       "@types/node"
     ],
     "paths": {
