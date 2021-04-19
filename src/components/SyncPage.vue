@@ -1,62 +1,81 @@
 <template>
-    <div class="container grid-lg">
-        <div class="columns" style="margin-bottom:5rem;">
-            <div class="column col-lg-5 col-md-12">
+    <div class="container grid-xl">
+        <div class="columns">
+            <div
+                class="column col-4 col-mx-auto col-md-12 text-center"
+                style="align-self: center; padding-top: 30px; padding-bottom: 30px"
+            >
                 <div class="text-center" style="margin-bottom:1rem;">
-                    <img width="128" height="128" src="../assets/sync-logo.png" alt="VeChain Sync Logo">
-                    <h2>Sync</h2>
-                    <div class="caption">
-                        by
-                        <a href="https://www.vechain.org/">VeChain Foundation</a>
-                    </div>
+                    <img
+                        width="64"
+                        height="64"
+                        src="../assets/sync2-logo.svg"
+                        alt="VeChain Sync Logo"
+                    />
+                    <h2>VeChain Sync2</h2>
                 </div>
-                <div
-                    style="font-size:1rem;"
-                ><i>Sync</i> is the official desktop wallet firstly supports <i>Connex</i>. It provides seamless experience for users and developers. Which is designed to provide the superior user experiences for VeChain Apps, and serves as the dApp environment to provide unlimited potential for developers and users.</div>
-                <br>
-                <div class="text-center">
+                <div style="font-size:1rem;">The next-generation VeChain wallet for all platforms</div>
+                <br />
+                <div class="btn-group">
                     <template v-if="preferredAsset">
                         <a
-                            class="btn btn-primary btn-download"
                             :href="preferredAsset.url"
                             target="_blank"
-                        >Download Sync</a>
-                        <div
-                            class="my-2 caption"
-                        >v{{$env.syncReleases[0].version}} for {{$env.platform | osName}} ({{preferredAsset.size | size}})</div>
+                            class="btn btn-lg btn-primary"
+                        >Download Sync2</a>
+                        <a class="btn btn-lg btn-primary" @click="show = !show">
+                            <i class="icon icon-arrow-down"></i>
+                        </a>
                     </template>
-                    <div v-else>
-                        <a class="btn btn-primary btn-download" href="#downloads">Download Sync</a>
-                    </div>
-                    <p>
-                        <a
-                            class="caption"
-                            href="https://docs.vechain.org/sync/user-guide/"
-                        >User Guide</a>
-                    </p>
+                    <a
+                        v-else
+                        @click="show = !show"
+                        class="btn btn-lg btn-primary"
+                        tabindex="0"
+                    >
+                        Download Sync2
+                        <i class="icon icon-arrow-down"></i>
+                    </a>
                 </div>
+                <DownloadAssets style="max-width: 320px;" v-show="show" :assets="$env.syncReleases[0].assets" />
+                <div
+                    v-if="preferredAsset"
+                    class="my-2 caption"
+                >{{$env.syncReleases[0].version}} for {{preferredAsset.platform | osName}} {{preferredAsset.arch | osArch(preferredAsset.platform)}} ({{preferredAsset.size | size}})</div>
             </div>
-            <div class="column col-lg-7 col-md-12 text-center">
-                <img
-                    class="screenshot"
-                    style="margin-bottom:2rem"
-                    src="../assets/sync-ss-light.png"
-                    alt="VeChain Sync Screenshot - light theme"
-                >
-                <img class="screenshot" src="../assets/sync-ss-dark.png" alt="VeChain Sync Screenshot - dark theme">
+            <div
+                class="column col-6 col-mx-auto col-md-10 text-center"
+                style="align-self: center; padding-top: 30px; padding-bottom: 30px"
+            >
+                <img width="100%" src="../assets/screenshot.png" />
             </div>
         </div>
-        <div class="text-center" style="margin-bottom:5rem;">
-            <h4 class="text-center" id="downloads">All Supported Platforms</h4>
-            <DownloadAssets :assets="$env.syncReleases[0].assets"/>
-        </div>
-        <div>
-            <h4 class="text-center">All Releases</h4>
-            <div v-for="(release, i) in $env.syncReleases" :key="i">
-                <h5>v{{release.version}}</h5>
-                <div>released at {{new Date(release.releaseDate).toLocaleString()}}</div>
-                <DownloadAssets table :assets="release.assets"/>
-                <p/>
+        <div class="columns bg-gray">
+            <div
+                class="column col-3 col-mx-auto col-sm-12 text-center"
+                style="padding-top: 30px; padding-bottom: 30px"
+            >
+                <img src="../assets/asset.svg" width="120" />
+                <h4>Asset Management</h4>
+                <div style="font-size:1rem;">Send and receive assets in one place.</div>
+            </div>
+            <div
+                class="column col-3 col-mx-auto col-sm-12 text-center"
+                style="padding-top: 30px; padding-bottom: 30px"
+            >
+                <img src="../assets/dapps.svg" width="120" />
+                <h4>DApps Interaction</h4>
+                <div style="font-size:1rem;">Sign transactions and certificates anytime, anywhere.</div>
+            </div>
+            <div
+                class="column col-3 col-mx-auto col-sm-12 text-center"
+                style="padding-top: 30px; padding-bottom: 30px"
+            >
+                <img src="../assets/platforms.svg" width="120" />
+                <h4>All Platforms</h4>
+                <div
+                    style="font-size:1rem;"
+                >Designed to work with desktop, mobile devices and all mainstream web browsers.</div>
             </div>
         </div>
     </div>
@@ -71,20 +90,16 @@ import DownloadAssets from './DownloadAssets.vue'
     }
 })
 export default class SyncPage extends Vue {
-    get preferredAsset() { return this.$env.preferredAsset(this.$env.syncReleases[0].assets) }
+    show = false
+    get preferredAsset() {
+        return this.$env.preferredAsset(this.$env.syncReleases[0].assets)
+    }
 }
 </script>
 <style lang="scss" scoped>
-.screenshot {
-    width: 100%;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    border-radius: 3px;
-    border-style: none;
-}
 .btn-download {
     padding: 0.4rem 1.5rem;
     height: auto;
     border-radius: 5px;
 }
 </style>
-
