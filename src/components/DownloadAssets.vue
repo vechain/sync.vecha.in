@@ -1,41 +1,24 @@
 <template>
-    <table v-if="table" class="table table-hover" style="font-size:0.7rem;">
-        <thead>
-            <tr>
-                <th>Platform</th>
-                <th>File Size</th>
-                <th>Checksum</th>
-                <th>Download</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(asset, i) in assets" :key="i">
-                <td>{{asset.platform | osName}}</td>
-                <td>{{asset.size.toLocaleString()}}</td>
-                <td>
+    <div class="container">
+        <div class="d-inline-block links-container" style="justify-content: center;">
+            <div v-for="(group, i) in groupedAssets" :key="i">
+                <div class="columns" style="margin: 0 15px;">
+                    <img width="30em" :src="group[0].platform | osLogo" />
+                    <span
+                        class="ml-1"
+                        style="align-self: center; font-size: 1.2em"
+                    >{{group[0].platform | osName}}</span>
                     <a
-                        :href="`data:,${asset.checksum}`"
-                        :download="`${asset.fileName}-sha512-base64.txt`"
+                        v-for="item in group"
+                        :key="item.checknum"
+                        :href="item.url"
                         target="_blank"
-                    >SHA512</a>
-                </td>
-                <td>
-                    <a :href="asset.url" target="_blank">{{asset.fileName}}</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div v-else class="text-center">
-        <a
-            v-for="(asset, i) in assets"
-            :key="i"
-            class="asset-block"
-            :href="asset.url"
-            target="_blank"
-        >
-            <img width="64" height="64" :src="asset.platform | osLogo">
-            <div>{{asset.platform | osName}}</div>
-        </a>
+                        class="label label-primary ml-1"
+                        style="align-self: center; font-size: 0.6em"
+                    >{{item.arch | osArch(item.platform)}}</a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -43,27 +26,32 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 
 @Component
 export default class DownloadAssets extends Vue {
-    @Prop(Boolean)
-    private table!: boolean
     @Prop(Array)
     private assets!: Release.Asset[]
+
+    get groupedAssets() {
+        const orderP = ['win32', 'darwin', 'linux']
+        const orderA = ['x86', 'arm64', 'universal']
+        let result: Release.Asset[][] = []
+        orderP.forEach(item => {
+            result = [
+                ...result,
+                this.assets
+                    .filter(asset => {
+                        return asset.platform === item
+                    })
+                    .sort((ra, rb) => {
+                        return orderA.indexOf(ra.arch) - orderA.indexOf(rb.arch)
+                    })
+            ]
+        })
+
+        return result
+    }
 }
 </script>
-<style lang="scss" scoped>
-.asset-block {
-    display: inline-block;
-    padding: 1.5rem 2.5rem;
-    text-align: center;
-    color: currentColor;
-    user-select: none;
-    text-decoration: none;
-    margin: 1rem;
-    transition: all 0.2s;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-.asset-block:hover {
-    box-shadow: 0 0 0 2px #384eb0;
-    background-color: rgba(0, 0, 0, 0.03);
+<style scoped>
+.links-container > div {
+    margin: 15px 0;
 }
 </style>
