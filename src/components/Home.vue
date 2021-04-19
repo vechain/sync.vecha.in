@@ -42,13 +42,11 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import SyncPage from './SyncPage.vue'
-import ThorWalletPage from './ThorWalletPage.vue'
 import { print } from 'util';
 
 @Component({
     components: {
-        SyncPage,
-        ThorWalletPage
+        SyncPage
     }
 })
 export default class Home extends Vue {
