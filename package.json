@@ -11,7 +11,7 @@
   "dependencies": {
     "custom-protocol-detection": "^1.0.1",
     "register-service-worker": "^1.5.2",
-    "spectre.css": "^0.5.8",
+    "spectre.css": "^0.5.9",
     "ua-parser-js": "^0.7.19",
     "vue": "^2.5.21",
     "vue-analytics": "^5.16.2",
