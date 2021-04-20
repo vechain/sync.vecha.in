@@ -16,10 +16,10 @@
                         <img src="../assets/github-logo.svg" width="20" />
                     </a>
 
-                    <i class="icon-menu icon show-md" @click="shoeMenu = !shoeMenu" />
+                    <i class="icon-menu icon show-md" @click="showMenu = !showMenu" />
                 </section>
             </header>
-            <div v-if="shoeMenu">
+            <div v-if="showMenu">
                 <ul class="menu bg-dark text-left">
                     <li class="menu-item">
                         <a
@@ -42,7 +42,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import SyncPage from './SyncPage.vue'
-import { print } from 'util';
 
 @Component({
     components: {
@@ -51,7 +50,7 @@ import { print } from 'util';
 })
 export default class Home extends Vue {
     private hash = location.hash
-    private shoeMenu = false
+    private showMenu = false
 
     private created() {
         this.$ga.page('/sync.vecha.in/home')
