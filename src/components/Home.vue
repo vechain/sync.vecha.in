@@ -12,14 +12,14 @@
                     >User Guide</a>
                 </section>
                 <section class="navbar-section">
-                    <a class="hide-md nav-link" href="https://github.com/vechain">
+                    <a class="hide-md nav-link" href="https://github.com/vechain/sync2">
                         <img src="../assets/github-logo.svg" width="20" />
                     </a>
 
                     <i class="icon-menu icon show-md" @click="showMenu = !showMenu" />
                 </section>
             </header>
-            <div v-if="showMenu">
+            <div class="show-md" v-if="showMenu">
                 <ul class="menu bg-dark text-left">
                     <li class="menu-item">
                         <a
@@ -29,7 +29,7 @@
                         >User Guide</a>
                     </li>
                     <li class="menu-item">
-                        <a class="nav-link" target="_blank" href="https://github.com/vechain">
+                        <a class="nav-link" target="_blank" href="https://github.com/vechain/sync2">
                             <img src="../assets/github-logo.svg" width="20" />
                         </a>
                     </li>
