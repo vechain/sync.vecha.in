@@ -14,7 +14,7 @@
                     />
                     <h2>VeChain Sync2</h2>
                 </div>
-                <div style="font-size:1rem;">The next-generation VeChain wallet for all platforms</div>
+                <div style="font-size:16px;">The next-generation VeChain wallet for all platforms</div>
                 <br />
                 <div class="btn-group">
                     <template v-if="preferredAsset">
@@ -42,6 +42,7 @@
                     v-if="preferredAsset"
                     class="my-2 caption"
                 >{{$env.syncReleases[0].version}} for {{preferredAsset.platform | osName}} {{preferredAsset.arch | osArch(preferredAsset.platform)}} ({{preferredAsset.size | size}})</div>
+                <a href="/checksum.html" target="_blank">SHA512 checksum</a>
             </div>
             <div
                 class="column col-6 col-mx-auto col-md-10 text-center"
@@ -52,29 +53,29 @@
         </div>
         <div class="columns bg-gray">
             <div
-                class="column col-3 col-mx-auto col-sm-12 text-center"
+                class="column col-4 col-mx-auto col-sm-12 text-center"
                 style="padding-top: 30px; padding-bottom: 30px"
             >
-                <img src="../assets/asset.svg" width="120" />
-                <h4>Asset Management</h4>
-                <div style="font-size:1rem;">Send and receive assets in one place.</div>
+                <img src="../assets/asset.svg" width="100" />
+                <h5>Asset Management</h5>
+                <div style="font-size:14px;">Send and receive assets in one place.</div>
             </div>
             <div
-                class="column col-3 col-mx-auto col-sm-12 text-center"
+                class="column col-4 col-mx-auto col-sm-12 text-center"
                 style="padding-top: 30px; padding-bottom: 30px"
             >
-                <img src="../assets/dapps.svg" width="120" />
-                <h4>DApps Interaction</h4>
-                <div style="font-size:1rem;">Sign transactions and certificates anytime, anywhere.</div>
+                <img src="../assets/dapps.svg" width="100" />
+                <h5>DApps Interaction</h5>
+                <div style="font-size:14px;">Sign transactions and certificates anytime, anywhere.</div>
             </div>
             <div
-                class="column col-3 col-mx-auto col-sm-12 text-center"
+                class="column col-4 col-mx-auto col-sm-12 text-center"
                 style="padding-top: 30px; padding-bottom: 30px"
             >
-                <img src="../assets/platforms.svg" width="120" />
-                <h4>All Platforms</h4>
+                <img src="../assets/platforms.svg" width="100" />
+                <h5>All Platforms</h5>
                 <div
-                    style="font-size:1rem;"
+                    style="font-size:14px;"
                 >Designed to work with desktop, mobile devices and all mainstream web browsers.</div>
             </div>
         </div>
