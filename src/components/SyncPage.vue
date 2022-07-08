@@ -42,7 +42,7 @@
                     v-if="preferredAsset"
                     class="my-2 caption"
                 >{{$env.syncReleases[0].version}} for {{preferredAsset.platform | osName}} {{preferredAsset.arch | osArch(preferredAsset.platform)}} ({{preferredAsset.size | size}})</div>
-                <a href="/checksum.html" target="_blank">SHA512 checksum</a>
+                <a href="/checksum.html" target="_blank" class="caption">SHA512 checknum</a>
             </div>
             <div
                 class="column col-6 col-mx-auto col-md-10 text-center"

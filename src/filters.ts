@@ -34,7 +34,12 @@ Vue.filter('osArch', (arch: 'x86' | 'arm64' | 'universal', platform: NodeJS.Plat
         case 'x86':
             return platform === 'darwin' ? 'Intel Chip' :'64 bit'
         case 'arm64':
-            return platform === 'darwin' ? 'Apple Silicon' :'ARM 64'
+            if (platform === 'android') {
+                return 'apk'
+            } else {
+                return platform === 'darwin' ? 'Apple Silicon' :'ARM 64'
+            }
+
         case 'universal':
             return 'Universal'
     }
