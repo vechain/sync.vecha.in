@@ -4,6 +4,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const Renderer = Prerender.PuppeteerRenderer
 
 module.exports = {
+    pages: {
+        index: {
+            entry: 'src/main',
+            template: 'public/index.html',
+            filename: 'index.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'index']
+        },
+        checksum: {
+            entry: 'src/checksum/main',
+            template: 'public/index.html',
+            filename: 'checksum.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'checksum']
+        }
+    },
     lintOnSave: false,
     publicPath: '/',
     pwa: {
