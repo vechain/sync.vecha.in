@@ -14,7 +14,7 @@ function getArch(appUrl: string): 'arm64' | 'x86' | 'universal' {
         return 'universal'
     }
 
-    if (appUrl.includes('arm64')) {
+    if (appUrl.includes('arm64') || appUrl.includes('android')) {
         return 'arm64'
     }
 
@@ -49,6 +49,8 @@ async function fetchReleases() {
         //     .filter(asset => asset.browser_download_url.startsWith('Sync2') && !asset.browser_download_url.endsWith('blockmap'))
         const ymlAssets = (item.assets as any[])
             .filter(asset => asset.browser_download_url.endsWith('.yml'))
+        const apks = (item.assets as any[])
+        .filter(asset => asset.browser_download_url.endsWith('.apk'))
 
         for (const asset of ymlAssets) {
             const yml = JSYaml.safeLoad(await httpGet(asset.browser_download_url))
@@ -56,7 +58,7 @@ async function fetchReleases() {
                 .filter(f =>
                     f.url.endsWith('.exe') || f.url.endsWith('.dmg') || f.url.endsWith('.AppImage')
                 )
-
+            
             if (files.length) {
                 files.forEach(file => {
                     assets.push({
@@ -70,6 +72,16 @@ async function fetchReleases() {
                 })
             }
         }
+        apks.forEach(apk => {
+            assets.push({
+                fileName: apk.name,
+                url: apk.browser_download_url,
+                size: apk.size,
+                checksum: '',
+                platform: 'android',
+                arch: getArch(apk.name)
+            })
+        })
     }
     return releases
 }

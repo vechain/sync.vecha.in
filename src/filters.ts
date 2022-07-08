@@ -9,6 +9,8 @@ Vue.filter('osName', (platform: NodeJS.Platform) => {
             return 'MacOS'
         case 'linux':
             return 'Linux'
+        case 'android':
+            return 'Android'
     }
     return ''
 })
@@ -21,6 +23,8 @@ Vue.filter('osLogo', (platform: NodeJS.Platform) => {
             return require('@/assets/macOS.svg')
         case 'linux':
             return require('@/assets/linux.svg')
+        case 'android':
+            return require('@/assets/android.svg')
     }
     return ''
 })

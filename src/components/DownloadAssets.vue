@@ -30,7 +30,7 @@ export default class DownloadAssets extends Vue {
     private assets!: Release.Asset[]
 
     get groupedAssets() {
-        const orderP = ['win32', 'darwin', 'linux']
+        const orderP = ['win32', 'darwin', 'linux', 'android']
         const orderA = ['x86', 'arm64', 'universal']
         let result: Release.Asset[][] = []
         orderP.forEach(item => {
