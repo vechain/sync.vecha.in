@@ -17,7 +17,7 @@
                 <div style="font-size:16px;">The next-generation Vechain wallet for all platforms</div>
                 <br />
                 <template v-if="$env.isAndroid() || $env.isIOS()">
-                    <playBtn />
+                    <playBtn :androidUrl="androidUrl" />
                 </template>
                 <template v-else>
                   <div class="btn-group">
@@ -110,6 +110,16 @@ const iosApp: Release.Asset = {
 })
 export default class SyncPage extends Vue {
     show = false
+
+    get androidUrl() {
+      const a = this.assets.find(i => i.platform === 'android')
+
+      if (a) {
+        return a.url
+      } else {
+        return ''
+      }
+    }
     
     get preferredAsset() {
         return this.$env.preferredAsset(this.$env.syncReleases[0].assets)

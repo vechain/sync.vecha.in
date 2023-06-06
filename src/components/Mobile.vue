@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a v-if="$env.isIOS()" target="_blank" href="https://apps.apple.com/us/app/vechain-sync2/id6446363029">
+    <a v-if="$env.isIOS()" target="_blank" href="https://apps.apple.com/app/6446363029">
       <img  width="155px" src="../assets/appstore.svg" />
     </a>
     <template v-if="$env.isAndroid()">
@@ -10,14 +10,17 @@
       <br/>
       or
       <br/>
-      <a> Download Android APK </a>
+      <a target="_blank" :href="androidUrl"> Download Android APK </a>
     </template>
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Prop, Component } from 'vue-property-decorator'
 
+@Component
 export default class Mobile extends Vue {
-
+  @Prop(String)
+  private androidUrl!: string
+  
 }
 </script>
