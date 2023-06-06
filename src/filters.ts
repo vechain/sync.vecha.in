@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 
-Vue.filter('osName', (platform: NodeJS.Platform) => {
+Vue.filter('osName', (platform: NodeJS.Platform | 'ios') => {
     switch (platform) {
         case 'win32':
             return 'Windows'
@@ -11,11 +11,13 @@ Vue.filter('osName', (platform: NodeJS.Platform) => {
             return 'Linux'
         case 'android':
             return 'Android'
+        case 'ios':
+            return 'iOS'
     }
     return ''
 })
 
-Vue.filter('osLogo', (platform: NodeJS.Platform) => {
+Vue.filter('osLogo', (platform: NodeJS.Platform | 'ios') => {
     switch (platform) {
         case 'win32':
             return require('@/assets/windows.svg')
@@ -25,17 +27,21 @@ Vue.filter('osLogo', (platform: NodeJS.Platform) => {
             return require('@/assets/linux.svg')
         case 'android':
             return require('@/assets/android.svg')
+        case 'ios':
+            return require('@/assets/ios.svg')
     }
     return ''
 })
 
-Vue.filter('osArch', (arch: 'x86' | 'arm64' | 'universal', platform: NodeJS.Platform) => {
+Vue.filter('osArch', (arch: 'x86' | 'arm64' | 'universal', platform: NodeJS.Platform | 'ios') => {
     switch (arch) {
         case 'x86':
             return platform === 'darwin' ? 'Intel Chip' :'64 bit'
         case 'arm64':
             if (platform === 'android') {
                 return 'apk'
+            } if (platform === 'ios') {
+              return 'ipa'
             } else {
                 return platform === 'darwin' ? 'Apple Silicon' :'ARM 64'
             }

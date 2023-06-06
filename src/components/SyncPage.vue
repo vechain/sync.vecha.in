@@ -10,39 +10,46 @@
                         width="64"
                         height="64"
                         src="../assets/sync2-logo.svg"
-                        alt="VeChain Sync Logo"
+                        alt="Vechain Sync Logo"
                     />
-                    <h2>VeChain Sync2</h2>
+                    <h2>Vechain Sync2</h2>
                 </div>
-                <div style="font-size:16px;">The next-generation VeChain wallet for all platforms</div>
+                <div style="font-size:16px;">The next-generation Vechain wallet for all platforms</div>
                 <br />
-                <div class="btn-group">
-                    <template v-if="preferredAsset">
-                        <a
-                            :href="preferredAsset.url"
-                            target="_blank"
-                            class="btn btn-lg btn-primary"
-                        >Download Sync2</a>
-                        <a class="btn btn-lg btn-primary" @click="show = !show">
-                            <i class="icon icon-arrow-down"></i>
-                        </a>
-                    </template>
-                    <a
-                        v-else
-                        @click="show = !show"
-                        class="btn btn-lg btn-primary"
-                        tabindex="0"
-                    >
-                        Download Sync2
-                        <i class="icon icon-arrow-down"></i>
-                    </a>
-                </div>
-                <DownloadAssets style="max-width: 320px;" v-show="show" :assets="$env.syncReleases[0].assets" />
-                <div
-                    v-if="preferredAsset"
-                    class="my-2 caption"
-                >{{$env.syncReleases[0].version}} for {{preferredAsset.platform | osName}} {{preferredAsset.arch | osArch(preferredAsset.platform)}} ({{preferredAsset.size | size}})</div>
-                <a href="/checksum.html" target="_blank" class="caption">SHA512 checknum</a>
+                <template v-if="$env.isAndroid() || $env.isIOS()">
+                    <playBtn />
+                </template>
+                <template v-else>
+                  <div class="btn-group">
+                      <template v-if="preferredAsset">
+                          <a
+                              :href="preferredAsset.url"
+                              target="_blank"
+                              class="btn btn-lg btn-primary"
+                          >Download Sync2</a>
+                          <a class="btn btn-lg btn-primary" @click="show = !show">
+                              <i class="icon icon-arrow-down"></i>
+                          </a>
+                      </template>
+                      <a
+                          v-else
+                          @click="show = !show"
+                          class="btn btn-lg btn-primary"
+                          tabindex="0"
+                      >
+                          Download Sync2
+                          <i class="icon icon-arrow-down"></i>
+                      </a>
+                  </div>
+                  <DownloadAssets style="max-width: 320px;" v-show="show" :assets="assets" />
+                  <div
+                      v-if="preferredAsset"
+                      class="my-2 caption"
+                  >{{$env.syncReleases[0].version}} for {{preferredAsset.platform | osName}} {{preferredAsset.arch | osArch(preferredAsset.platform)}} ({{preferredAsset.size | size}})</div>
+                  <div>
+                    <a href="/checksum.html" target="_blank" class="caption">SHA512 checknum</a>
+                  </div>
+                </template>
             </div>
             <div
                 class="column col-6 col-mx-auto col-md-10 text-center"
@@ -84,16 +91,33 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import DownloadAssets from './DownloadAssets.vue'
+import playBtn from './Mobile.vue'
+
+const iosApp: Release.Asset = {
+    size: 0,
+    arch: 'arm64',
+    url: 'https://apps.apple.com/us/app/vechain-sync2/id6446363029',
+    platform: 'ios',
+    fileName: 'Sync2app',
+    checksum: ''
+  }
 
 @Component({
     components: {
-        DownloadAssets
+        DownloadAssets,
+        playBtn
     }
 })
 export default class SyncPage extends Vue {
     show = false
+    
     get preferredAsset() {
         return this.$env.preferredAsset(this.$env.syncReleases[0].assets)
+    }
+
+    get assets() {
+      this.$env.syncReleases[0].assets.push(iosApp)
+      return this.$env.syncReleases[0].assets
     }
 }
 </script>

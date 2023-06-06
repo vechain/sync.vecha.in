@@ -3,8 +3,8 @@
         <div class="bg-dark px-2 py-2">
             <header class="navbar">
                 <section class="navbar-section ml-2">
-                    <img width="30" src="../assets/vechain-logo.svg" alt />
-                    <a class="text-light mx-2">VeChain Sync</a>
+                    <img width="150" src="../assets/vechainlogo.svg" alt />
+                    <a class="text-light mx-2">Sync</a>
                     <a
                         href="https://docs.vechain.org/sync2/user-guide/"
                         target="_blank"
@@ -13,7 +13,7 @@
                 </section>
                 <section class="navbar-section">
                     <a class="hide-md nav-link" href="https://github.com/vechain/sync2">
-                        <img src="../assets/github-logo.svg" width="20" />
+                        <img src="../assets/github-logo.svg" width="30" />
                     </a>
 
                     <i class="icon-menu icon show-md" @click="showMenu = !showMenu" />

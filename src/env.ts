@@ -12,6 +12,30 @@ const target = (() => {
         hash.slice(1) : ''
 })()
 
+const isAppleSilicon = () => {
+  let result = false
+  if (typeof document !== 'undefined') {
+    let w = document.createElement('canvas').getContext('webgl')
+    let d = w!.getExtension('WEBGL_debug_renderer_info')
+    let g = d && w!.getParameter(d.UNMASKED_RENDERER_WEBGL) || '';
+    let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    //Detect if the user is using a Apple GPU (M1)
+    if (isSafari || (g.match(/Apple/) && !g.match(/Apple GPU/))) {
+      result = true
+    }
+  }
+
+  return result
+}
+
+const isIOS = () => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+}
+
+const isAndroid = () => {
+  return /Android/.test(navigator.userAgent) && !window.MSStream
+}
+
 const env = {
     get prerender() {
         return !!(window as any).$PRERENDER
@@ -53,8 +77,18 @@ const env = {
         }
     },
     syncReleases,
+    isIOS,
+    isAndroid,
     preferredAsset(assets: Release.Asset[]) {
-        return assets.find(a => a.platform === this.platform && a.arch !== 'arm64')
+      const isM1 = isAppleSilicon()
+      console.log(this.platform, isM1)
+        return assets.find(a => {
+          if (this.platform === 'darwin' && isM1) {
+            return a.platform === this.platform && a.arch === 'arm64'
+          } else {
+            return a.platform === this.platform && a.arch !== 'arm64'
+          }
+        })
     }
 }
 
