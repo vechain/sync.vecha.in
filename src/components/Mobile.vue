@@ -4,7 +4,7 @@
       <img  width="155px" src="../assets/appstore.svg" />
     </a>
     <template v-if="$env.isAndroid()">
-      <a href="http://" target="_blank">
+      <a href="https://play.google.com/store/apps/details?id=org.vechain.sync2" target="_blank">
         <img width="155px" src="../assets/googleplay.svg" />
       </a>
       <br/>
