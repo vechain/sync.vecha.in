@@ -36,14 +36,14 @@ Vue.filter('osLogo', (platform: NodeJS.Platform | 'ios') => {
 Vue.filter('osArch', (arch: 'x86' | 'arm64' | 'universal', platform: NodeJS.Platform | 'ios') => {
     switch (arch) {
         case 'x86':
-            return platform === 'darwin' ? 'Intel Chip' :'64 bit'
+            return platform === 'darwin' ? 'Intel Chip' :'x64'
         case 'arm64':
             if (platform === 'android') {
                 return 'apk'
             } if (platform === 'ios') {
-              return 'ipa'
+              return 'App Store'
             } else {
-                return platform === 'darwin' ? 'Apple Silicon' :'ARM 64'
+                return platform === 'darwin' ? 'Apple Silicon' :'Arm64'
             }
 
         case 'universal':

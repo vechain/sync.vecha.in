@@ -10,8 +10,6 @@
                     >{{group[0].platform | osName}}</span>
 
                     <template v-for="item in group">
-                      <a v-if="item.platform === 'ios'" style="align-self: center; font-size: 0.6em" class="label label-primary ml-1"
-                       :href="appUrl">App Store</a>
                       <a v-if="item.platform === 'android'" style="align-self: center; font-size: 0.6em" class="label label-primary ml-1"
                        :href="playUrl">Google Play</a>
                        <a
@@ -37,10 +35,6 @@ export default class DownloadAssets extends Vue {
 
     get playUrl(): string {
       return this.$env.GooglePlay
-    }
-
-    get appUrl(): string {
-      return this.$env.AppStore
     }
 
     get groupedAssets() {
