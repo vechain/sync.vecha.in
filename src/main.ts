@@ -9,6 +9,12 @@ import 'spectre.css/dist/spectre-icons.css'
 
 Vue.config.productionTip = false
 
+declare global {
+  interface Window { MSStream: any; }
+}
+
+window.MSStream = window.MSStream || {};
+
 
 Vue.use({
     install(vue: typeof Vue) {
