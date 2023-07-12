@@ -27,7 +27,8 @@ const isAppleSilicon = () => {
 
   return result
 }
-
+const GooglePlay = 'https://play.google.com/store/apps/details?id=org.vechain.sync2'
+const AppStore = 'https://apps.apple.com/app/6446363029'
 const isIOS = () => {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
 }
@@ -89,7 +90,9 @@ const env = {
             return a.platform === this.platform && a.arch !== 'arm64'
           }
         })
-    }
+    },
+    GooglePlay,
+    AppStore
 }
 
 export default env

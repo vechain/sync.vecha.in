@@ -8,14 +8,20 @@
                         class="ml-1"
                         style="align-self: center; font-size: 1.2em"
                     >{{group[0].platform | osName}}</span>
-                    <a
-                        v-for="item in group"
-                        :key="item.checknum"
-                        :href="item.url"
-                        target="_blank"
-                        class="label label-primary ml-1"
-                        style="align-self: center; font-size: 0.6em"
-                    >{{item.arch | osArch(item.platform)}}</a>
+
+                    <template v-for="item in group">
+                      <a v-if="item.platform === 'ios'" style="align-self: center; font-size: 0.6em" class="label label-primary ml-1"
+                       :href="appUrl">App Store</a>
+                      <a v-if="item.platform === 'android'" style="align-self: center; font-size: 0.6em" class="label label-primary ml-1"
+                       :href="playUrl">Google Play</a>
+                       <a
+                          :key="item.checknum"
+                          :href="item.url"
+                          target="_blank"
+                          class="label label-primary ml-1"
+                          style="align-self: center; font-size: 0.6em"
+                      >{{item.arch | osArch(item.platform)}}</a>
+                    </template>
                 </div>
             </div>
         </div>
@@ -28,6 +34,14 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 export default class DownloadAssets extends Vue {
     @Prop(Array)
     private assets!: Release.Asset[]
+
+    get playUrl(): string {
+      return this.$env.GooglePlay
+    }
+
+    get appUrl(): string {
+      return this.$env.AppStore
+    }
 
     get groupedAssets() {
         const orderP = ['win32', 'darwin', 'linux', 'android', 'ios']

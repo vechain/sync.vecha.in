@@ -96,7 +96,7 @@ import playBtn from './Mobile.vue'
 const iosApp: Release.Asset = {
     size: 0,
     arch: 'arm64',
-    url: 'https://apps.apple.com/us/app/vechain-sync2/id6446363029',
+    url: '',
     platform: 'ios',
     fileName: 'Sync2app',
     checksum: ''
@@ -126,7 +126,10 @@ export default class SyncPage extends Vue {
     }
 
     get assets() {
-      this.$env.syncReleases[0].assets.push(iosApp)
+      this.$env.syncReleases[0].assets.push({
+        ...iosApp,
+        url: this.$env.AppStore
+      })
       return this.$env.syncReleases[0].assets
     }
 }

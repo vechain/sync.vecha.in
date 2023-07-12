@@ -1,10 +1,10 @@
 <template>
   <div>
-    <a v-if="$env.isIOS()" target="_blank" href="https://apps.apple.com/app/6446363029">
+    <a v-if="$env.isIOS()" target="_blank" :href="appUrl">
       <img  width="155px" src="../assets/appstore.svg" />
     </a>
     <template v-if="$env.isAndroid()">
-      <a href="https://play.google.com/store/apps/details?id=org.vechain.sync2" target="_blank">
+      <a :href="playUrl" target="_blank">
         <img width="155px" src="../assets/googleplay.svg" />
       </a>
       <br/>
@@ -22,5 +22,12 @@ export default class Mobile extends Vue {
   @Prop(String)
   private androidUrl!: string
   
+  get playUrl(): string {
+    return this.$env.GooglePlay
+  }
+
+  get appUrl(): string {
+    return this.$env.AppStore
+  }
 }
 </script>
